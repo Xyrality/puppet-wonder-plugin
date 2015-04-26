@@ -1,0 +1,14 @@
+{
+  "name": "puppet-wonder-plugin",
+  "version": "0.1.0",
+  "author": "XYRALITY GmbH",
+  "summary": "Installs WebObjects and Project Wonder server environments",
+  "license": "BSD",
+  "source": "https://github.com/Xyrality/puppet-wonder-plugin",
+  "project_page": "https://github.com/Xyrality/puppet-wonder-plugin",
+  "issues_url": "https://github.com/Xyrality/puppet-wonder-plugin/issues",
+  "dependencies": [
+    {"name":"puppetlabs-apache","version_requirement":">= 1.4.0"}
+  ]
+}
+

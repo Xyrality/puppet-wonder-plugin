@@ -1,0 +1,5 @@
+webobjects	webobjects/local_wo_dmg	boolean	false
+webobjects	webobjects/groupname	string	wouser
+webobjects	webobjects/local_wo_dmg_base_url	string
+webobjects	webobjects/local_wo_dmg_base_url_not_supported	note
+webobjects	webobjects/username	string	wouser
