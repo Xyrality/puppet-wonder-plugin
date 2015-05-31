@@ -24,6 +24,16 @@ class wonder (
 		owner   => "${userid}",
 		group   => "${groupid}",
 	}
+	
+	package { 'wget':
+	  ensure  => present,
+	  name    => 'wget'
+	}
+	
+	package { 'curl':
+	  ensure  => present,
+	  name    => 'curl'
+	}
 
 	file { '/etc/apt/apt.conf.d/99auth':
 		owner     => root,
@@ -93,7 +103,7 @@ WEBOBJECTS_URL=
 	}
 
 	exec { 'wait for monitor':
-		require => Package['projectwonder-javamonitor'],
+		require => Package['projectwonder-javamonitor', 'wget'],
 		command => '/usr/bin/wget --spider --tries 10 --retry-connrefused http://localhost:1086/'
 	}
 
@@ -103,7 +113,7 @@ WEBOBJECTS_URL=
 	}
 
 	exec { 'set WO adaptor URL':
-		require => Exec['wait for monitor'],
+		require => [ Exec['wait for monitor'], Package['curl'] ],
 		command => "/usr/bin/curl -X PUT -d \"{woAdaptor:'http://localhost:8080/cgi-bin/WebObjects'}\" http://localhost:1086/cgi-bin/WebObjects/JavaMonitor.woa/ra/mSiteConfig.json"
 	}
 
