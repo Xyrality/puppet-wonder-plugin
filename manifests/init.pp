@@ -1,39 +1,39 @@
 class wonder (
-	$username = 'wouser',
-	$userid = 2000,
-	$groupname = 'wouser',
-	$groupid = 2000,
-	) {
+  $username = 'wouser',
+  $userid = 2000,
+  $groupname = 'wouser',
+  $groupid = 2000,
+  ) {
 
-	group { $groupname:
-		ensure => present,
-		gid    => "${groupid}",
-	}
+  group { $groupname:
+    ensure => present,
+    gid    => "${groupid}",
+  }
 
-	user { $username:
-		ensure     => present,
-		uid        => "${userid}",
-		gid        => "${groupid}",
-		shell      => '/bin/bash',
-		managehome => false,
-	}
+  user { $username:
+    ensure     => present,
+    uid        => "${userid}",
+    gid        => "${groupid}",
+    shell      => '/bin/bash',
+    managehome => false,
+  }
 
-	file { "/home/${username}":
-		ensure  => directory,
-		recurse => true,
-		owner   => "${userid}",
-		group   => "${groupid}",
-	}
-	
-	package { 'wget':
-	  ensure  => present,
-	  name    => 'wget'
-	}
-	
-	package { 'curl':
-	  ensure  => present,
-	  name    => 'curl'
-	}
+  file { "/home/${username}":
+    ensure  => directory,
+    recurse => true,
+    owner   => "${userid}",
+    group   => "${groupid}",
+  }
+  
+  package { 'wget':
+    ensure  => present,
+    name    => 'wget'
+  }
+  
+  package { 'curl':
+    ensure  => present,
+    name    => 'curl'
+  }
 
   if $osfamily == 'debian' {
 
@@ -58,11 +58,11 @@ class wonder (
     file { '/var/cache/debconf/webobjects.preseed':
         ensure => present,
         require => [User[$username], Group[$groupname]],
-        content => "webobjects	webobjects/local_wo_dmg	boolean	false
-  webobjects	webobjects/groupname	string	${groupname}
-  webobjects	webobjects/local_wo_dmg_base_url	string
-  webobjects	webobjects/local_wo_dmg_base_url_not_supported	note
-  webobjects	webobjects/username	string	${username}
+        content => "webobjects  webobjects/local_wo_dmg boolean false
+  webobjects  webobjects/groupname  string  ${groupname}
+  webobjects  webobjects/local_wo_dmg_base_url  string
+  webobjects  webobjects/local_wo_dmg_base_url_not_supported  note
+  webobjects  webobjects/username string  ${username}
   "
     }
 
