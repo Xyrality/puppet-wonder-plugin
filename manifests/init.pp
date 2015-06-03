@@ -25,14 +25,18 @@ class wonder (
     group   => "${groupid}",
   }
   
-  package { 'wget':
-    ensure  => present,
-    name    => 'wget'
+  if !defined(Package['wget']) {
+    package { 'wget':
+        ensure => present,
+        name   => 'wget'
+    }
   }
   
-  package { 'curl':
-    ensure  => present,
-    name    => 'curl'
+  if !defined(Package['curl']) {
+    package { 'curl':
+        ensure => present,
+        name   => 'curl'
+    }
   }
 
   if $osfamily == 'debian' {
@@ -125,7 +129,7 @@ class wonder (
     
     package { 'libapache2-mod-wo':
       ensure  => present,
-      name    => 'woadaptor'
+      name    => 'woadaptor',
       require => Package['httpd'],
       notify  => Service['httpd'],
     }
